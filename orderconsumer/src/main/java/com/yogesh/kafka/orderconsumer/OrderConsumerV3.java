@@ -12,7 +12,9 @@ import com.yogesh.kafka.avro.Order; // <-- Generated from your .avsc
 import com.yogesh.kafka.annotations.KafkaConsumerConfig;
 import com.yogesh.kafka.util.KafkaProps;
 
-@KafkaConsumerConfig(bootstrapServers = "localhost:9092", groupId = "order-consumer-group-v3", topic = "orderTopicV3", keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer.class, valueDeserializer = io.confluent.kafka.serializers.KafkaAvroDeserializer.class, autoOffsetReset = "earliest", enableAutoCommit = true, pollMillis = 1000)
+import io.confluent.kafka.serializers.KafkaAvroDeserializer;
+
+@KafkaConsumerConfig(bootstrapServers = "localhost:9092", groupId = "order-consumer-group-v3", topic = "orderTopicV3", keyDeserializer = KafkaAvroDeserializer.class, valueDeserializer = KafkaAvroDeserializer.class, autoOffsetReset = "earliest", enableAutoCommit = true, pollMillis = 1000)
 public class OrderConsumerV3 {
 
 	public static void main(String[] args) {
@@ -32,7 +34,10 @@ public class OrderConsumerV3 {
 				for (ConsumerRecord<String, Order> r : records) {
 					Order order = r.value(); // Already a typed Avro object
 					if (order != null) {
-						System.out.printf("Consumed key=%s product=%s price=%d qty=%d customer=%s from %s-%d @ offset %d%n",r.key(), order.getProduct(), order.getPrice(), order.getQuantity(),order.getCustomerName(), r.topic(), r.partition(), r.offset());
+						System.out.printf(
+								"Consumed key=%s product=%s price=%d qty=%d customer=%s from %s-%d @ offset %d%n",
+								r.key(), order.getProduct(), order.getPrice(), order.getQuantity(),
+								order.getCustomerName(), r.topic(), r.partition(), r.offset());
 					}
 				}
 			}
