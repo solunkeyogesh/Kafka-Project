@@ -17,7 +17,7 @@ public class OrderProducerV2 {
 
 		try (Producer<String, Order> producer = new KafkaProducer<>(props)) {
 			Order order = new Order("Hp-Laptop", 340000, 2, "John Doe");
-			ProducerRecord<String, Order> record = new ProducerRecord<>("orderTopic", order.product(), order);
+			ProducerRecord<String, Order> record = new ProducerRecord<>("orderTopicV2", order.product(), order);
 			var meta = producer.send(record).get();
 			System.out.printf("Sent %s to %s-%d @ offset %d%n", order, meta.topic(), meta.partition(), meta.offset());
 		}

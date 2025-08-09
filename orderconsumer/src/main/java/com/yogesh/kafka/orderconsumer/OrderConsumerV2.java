@@ -12,7 +12,7 @@ import com.yogesh.kafka.model.Order;
 import com.yogesh.kafka.serdes.OrderDeserializer;
 import com.yogesh.kafka.util.KafkaProps;
 
-@KafkaConsumerConfig(bootstrapServers = "localhost:9092", groupId = "order-consumer-group-v2", topic = "orderTopic", keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer.class, valueDeserializer = OrderDeserializer.class, autoOffsetReset = "earliest", enableAutoCommit = true, pollMillis = 5000)
+@KafkaConsumerConfig(bootstrapServers = "localhost:9092", groupId = "order-consumer-group-v2", topic = "orderTopicV2", keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer.class, valueDeserializer = OrderDeserializer.class, autoOffsetReset = "earliest", enableAutoCommit = true, pollMillis = 5000)
 public class OrderConsumerV2 {
 
 	public static void main(String[] args) {
